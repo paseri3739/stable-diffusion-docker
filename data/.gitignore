@@ -1,0 +1,15 @@
+# Ignore everything in data/ by default.
+*
+
+# Keep this policy file and onboarding docs.
+!.gitignore
+!README.md
+
+# Keep the directory skeleton.
+!*/
+!**/.gitkeep
+
+# Keep tracked examples that show expected filenames and formats.
+!examples/
+!examples/**
+
