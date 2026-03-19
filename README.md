@@ -23,3 +23,5 @@
 - `stable-diffusion-webui` は `dev` ブランチ追従ではなく、現在は固定コミットで止まります。
 - Hugging Face などのキャッシュも `data/cache/` に集約します。
 - `data/` は bind mount 前提なので、ホスト側で直接バックアップできます。
+- NixOS では `gpus: all` より CDI デバイス指定のほうが実用的なため、Compose では `devices: [nvidia.com/gpu=all]` 相当を使っています。
+- NixOS 側では `hardware.nvidia-container-toolkit.enable = true;` に加えて、Docker の CDI を有効化した状態を前提にしています。

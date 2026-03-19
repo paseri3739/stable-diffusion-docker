@@ -22,6 +22,8 @@ services:
       SD_WEBUI_CACHE_FILE: /opt/stable-diffusion-webui/cache.json
     ports:
       - "${A1111_HOST_PORT:-7860}:${A1111_PORT:-7860}"
+    devices:
+      - "${A1111_GPU_DEVICE:-nvidia.com/gpu=all}"
     volumes:
       - ./data/cache:/opt/stable-diffusion-webui/cache
       - ./data/config_states:/opt/stable-diffusion-webui/config_states
@@ -40,4 +42,3 @@ services:
       - ./data/ui-config.json:/opt/stable-diffusion-webui/ui-config.json
     restart: unless-stopped
     shm_size: ${A1111_SHM_SIZE:-8g}
-    gpus: ${A1111_GPUS:-all}
