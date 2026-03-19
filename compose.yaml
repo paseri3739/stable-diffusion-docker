@@ -1,0 +1,43 @@
+services:
+  a1111:
+    container_name: ${A1111_CONTAINER_NAME:-stable-diffusion-webui}
+    image: ${A1111_IMAGE_NAME:-stable-diffusion-webui:dev-1937682}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PYTHON_IMAGE: ${A1111_PYTHON_IMAGE:-python:3.10.6-bullseye}
+        UID: ${A1111_UID:-1000}
+        GID: ${A1111_GID:-1000}
+        A1111_BUILD_ARGS: ${A1111_BUILD_ARGS:---skip-torch-cuda-test --no-download-sd-model --skip-version-check --exit}
+    environment:
+      COMMANDLINE_ARGS: ${A1111_COMMANDLINE_ARGS:---listen --port 7860 --skip-version-check --no-download-sd-model}
+      HF_HOME: /opt/stable-diffusion-webui/cache/huggingface
+      HUGGINGFACE_HUB_CACHE: /opt/stable-diffusion-webui/cache/huggingface/hub
+      TRANSFORMERS_CACHE: /opt/stable-diffusion-webui/cache/huggingface/transformers
+      TORCH_HOME: /opt/stable-diffusion-webui/cache/torch
+      XDG_CACHE_HOME: /opt/stable-diffusion-webui/cache
+      PIP_CACHE_DIR: /opt/stable-diffusion-webui/cache/pip
+      SD_WEBUI_CACHE_DIR: /opt/stable-diffusion-webui/cache/diskcache
+      SD_WEBUI_CACHE_FILE: /opt/stable-diffusion-webui/cache.json
+    ports:
+      - "${A1111_HOST_PORT:-7860}:${A1111_PORT:-7860}"
+    volumes:
+      - ./data/cache:/opt/stable-diffusion-webui/cache
+      - ./data/config_states:/opt/stable-diffusion-webui/config_states
+      - ./data/embeddings:/opt/stable-diffusion-webui/embeddings
+      - ./data/extensions:/opt/stable-diffusion-webui/extensions
+      - ./data/localizations:/opt/stable-diffusion-webui/localizations
+      - ./data/log:/opt/stable-diffusion-webui/log
+      - ./data/models:/opt/stable-diffusion-webui/models
+      - ./data/outputs:/opt/stable-diffusion-webui/outputs
+      - ./data/textual_inversion_templates:/opt/stable-diffusion-webui/textual_inversion_templates
+      - ./data/tmp:/opt/stable-diffusion-webui/tmp
+      - ./data/cache.json:/opt/stable-diffusion-webui/cache.json
+      - ./data/config.json:/opt/stable-diffusion-webui/config.json
+      - ./data/params.txt:/opt/stable-diffusion-webui/params.txt
+      - ./data/styles.csv:/opt/stable-diffusion-webui/styles.csv
+      - ./data/ui-config.json:/opt/stable-diffusion-webui/ui-config.json
+    restart: unless-stopped
+    shm_size: ${A1111_SHM_SIZE:-8g}
+    gpus: ${A1111_GPUS:-all}

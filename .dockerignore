@@ -1,0 +1,7 @@
+.git
+.gitmodules
+data/
+stable-diffusion-webui/.git
+stable-diffusion-webui/.github
+stable-diffusion-webui/test
+
