@@ -1,0 +1,21 @@
+# OS / editor noise
+.DS_Store
+._*
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Local environment
+.direnv/
+
+# Runtime data copied from an existing A1111 install
+data/
+
+# Optional local compose overrides
+compose.override.yaml
+docker-compose.override.yml
+
+# Local logs and temp files outside data/
+*.log
+tmp/
